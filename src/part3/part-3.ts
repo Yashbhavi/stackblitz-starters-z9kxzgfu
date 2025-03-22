@@ -88,6 +88,28 @@ class PriceEngine {
     /**
      * TODO: Your body goes here
      */
+    const { industry, agreesWithTermsAndConds } = user.questionBank
+    const relevantPrices = priceBank.filter((price) => price.industry === industry)
+    if(agreesWithTermsAndConds === 'no') {
+      return user.role === 'broker' ? {
+        priceResult: {description: 'No price selected'},
+        possiblePrices: relevantPrices,
+      }  : {
+        priceResult: {description: 'No price selected'}
+      }
+    }
+
+    const premiums = relevantPrices.map((price) => price.premium)
+    const highestPrice = Math.max(...premiums)
+    const lowestPrice = Math.min(...premiums)
+
+    if( user.role === 'broker') {
+      return {
+        priceResult: {highestPrice, lowestPrice},
+        possiblePrices: relevantPrices
+      }
+    }
+    return { priceResult: {highestPrice, lowestPrice}}
   }
 }
 

@@ -39,4 +39,25 @@ describe('#Part3', () => {
    * Example Usage:
    *  it('', () => {});
    * */
+
+  it('task 1 priceResult should contain highestPrice and lowestPrice', () => {
+    const result = task1().priceResult;
+    expect(result).toHaveProperty('highestPrice');
+    expect(result).toHaveProperty('lowestPrice');
+  });
+  
+  it('task 3 priceResult should contain a description field', () => {
+    const result = task3().priceResult;
+    expect(result).toHaveProperty('description');
+    expect(typeof result.description).toBe('string');
+  });
+  
+  it('task 2 possiblePrices should be an array', () => {
+    expect(Array.isArray(task2().possiblePrices)).toBe(true);
+  });
+  
+  it('task 4 possiblePrices should be an array', () => {
+    expect(Array.isArray(task4().possiblePrices)).toBe(true);
+  });
+  
 });

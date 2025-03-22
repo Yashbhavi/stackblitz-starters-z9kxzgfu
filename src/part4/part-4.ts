@@ -96,6 +96,31 @@ class PricingEngine {
     /**
      * TODO: Your body goes here.
      */
+    return new Promise((resolve) => {
+      const results: any[] = []
+      let resolved = false
+
+      providers.forEach((provider: { getPrice: () => Promise<any>; }) => {
+        provider.getPrice()
+        .then((result: { price: number; }) => {
+          if(result && result.price !== null && result.price >= 0) {
+            results.push(result)
+          }
+        })
+        .catch(() => {})
+      })
+
+      setTimeout(() => {
+        if(!resolved) {
+          resolved = true
+          if(results.length === 0) {
+            resolve(null)
+          } else {
+            resolve(results.reduce((lowest, current) => current.price < lowest.price ? current : lowest))
+          }
+        }
+      }, timeout)
+    })
   }
 }
 

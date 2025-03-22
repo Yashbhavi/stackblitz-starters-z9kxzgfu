@@ -1,4 +1,4 @@
-/***** TASK 2*****/
+/***** TASK 1*****/
 /**
  * The following class represents a simplified version of one we
  * use frequently in different parts of our codebase. We use it
@@ -8,9 +8,20 @@
  * that information if we have to (total price = premium + fee).
  */
 class Price {
-  constructor() {}
+  constructor({ premium = 0, fee =0} = {}) {
+    this.premium = premium
+    this.fee = fee
+  }
 
-  add() {}
+  add(...prices) {
+    return prices.reduce(
+      (acc, price) => {
+        acc.premium += price.premium
+        acc.fee += price.fee
+        return acc
+      }, {premium: this.premium, fee: this.fee}
+    )
+  }
 }
 
 /**
@@ -42,7 +53,7 @@ function task1() {
   return result;
 }
 
-console.log(task1());
+console.log("TASK 1",task1());
 
 /***** TASK 2 *****/
 
@@ -55,7 +66,21 @@ class NestedPrice extends Price {
    * The argument `prices` should be an array of instances of
    * the class Price or NestedPrice.
    */
-  constructor(prices) {}
+  constructor(prices) {
+    const total = prices.reduce(
+      (acc, price) => {
+        const {premium, fee} = price instanceof NestedPrice ? price.getPriceDetailN() : price
+        acc.premium += premium
+        acc.fee += fee
+        return acc
+      }, {premium: 0, fee: 0}
+    )
+    super(total)
+    this.prices = prices
+  }
+  getPriceDetailN() {
+    return {premium: this.premium, fee: this.fee}
+  }
 }
 
 /**
@@ -86,7 +111,7 @@ function task2() {
   return result;
 }
 
-console.log(task2());
+console.log("TASK 2",task2());
 
 // Export for Tak1 and Task2 Functions
 module.exports = { task1, task2 };

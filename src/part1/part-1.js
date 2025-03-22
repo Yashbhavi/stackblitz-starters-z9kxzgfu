@@ -12,6 +12,14 @@ function task1() {
   /**
    * TODO: Your body goes here
    */
+  const result = PROVIDERS.filter(p => p.industry === 'retail').reduce((acc,provider) => {
+    provider.prices.forEach(price => {
+      acc.totalPremium += price.premium || 0
+      acc.totalFees += price.fee? Number(price.fee) : 0
+    })
+    return acc
+  },{ totalPremium: 0, totalFees: 0})
+  return [result]
 }
 
 /**
@@ -21,6 +29,13 @@ function task2() {
   /**
    * TODO: Your body goes here
    */
+
+  const minPremium = Math.min(
+    ...PROVIDERS.filter(p => p.industry === 'technology').flatMap(p => p.prices.map(price => price.premium))
+    .filter(premium => premium !==null & premium !== undefined)
+  )
+
+  return [{totalPremium: minPremium}]
 }
 
 /**
@@ -31,6 +46,8 @@ function task3() {
   /**
    * TODO: Your body goes here
    */
+
+  return PROVIDERS.filter(p => p.industry === 'technology' && p.prices.some(price => price.premium >= 1000)).map(p => p.name)
 }
 
 /**
@@ -41,6 +58,18 @@ function task4() {
   /**
    * TODO: Your body goes here
    */
+
+  let highestProvider = PROVIDERS.reduce((highest, provider) => {
+    provider.prices.forEach(price => {
+      if(price.premium > highest.premium) {
+        highest.premium = price.premium
+        highest.name = provider.name
+        highest.industry = provider.industry
+      }
+    })
+    return highest
+  }, {name: ' ', industry: ' ', premium: - Infinity })
+  return [{name: highestProvider.name, industry: highestProvider.industry}]
 }
 
 /**

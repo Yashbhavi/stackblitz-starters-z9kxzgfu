@@ -15,4 +15,38 @@ describe('#Part2', () => {
    * Example Usage:
    *  it('', () => {});
    * */
+  it('task 1 should have numerical premium and fee', () => {
+    const result = task1();
+    expect(typeof result.premium).toBe('number');
+    expect(typeof result.fee).toBe('number');
+  });
+  
+  it('task 2 should have numerical premium and fee', () => {
+    const result = task2();
+    expect(typeof result.premium).toBe('number');
+    expect(typeof result.fee).toBe('number');
+  });
+
+  it('task 1 should contain both premium and fee fields', () => {
+    const result = task1();
+    expect(result).toHaveProperty('premium');
+    expect(result).toHaveProperty('fee');
+  });
+  
+  it('task 2 should contain both premium and fee fields', () => {
+    const result = task2();
+    expect(result).toHaveProperty('premium');
+    expect(result).toHaveProperty('fee');
+  });
+  
+  it('task 1 should not return null or undefined', () => {
+    expect(task1()).not.toBeNull();
+    expect(task1()).not.toBeUndefined();
+  });
+  
+  it('task 2 should not return null or undefined', () => {
+    expect(task2()).not.toBeNull();
+    expect(task2()).not.toBeUndefined();
+  });
+
 });

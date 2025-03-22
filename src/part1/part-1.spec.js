@@ -29,4 +29,19 @@ describe('#Part1', () => {
    *  it('', () => {});
    * */
   // Highest Premium
+
+  it('task 1 should return an array', () => {
+    expect(Array.isArray(part1.task1())).toBe(true);
+  });
+
+  it('task 2 should contain unique IDs', () => {
+    const ids = part1.task2().map(item => item.id);
+    const uniqueIds = new Set(ids);
+    expect(ids.length).toEqual(uniqueIds.size);
+  });
+
+  it('task 4 should not return null or undefined', () => {
+    expect(part1.task4()).not.toBeNull();
+    expect(part1.task4()).not.toBeUndefined();
+  });
 });
